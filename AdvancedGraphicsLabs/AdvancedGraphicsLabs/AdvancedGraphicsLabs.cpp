@@ -6,6 +6,8 @@
 #include <string>
 #include "AdvancedGraphicsLabs.h"
 #include "date.h"
+#include "Account.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -13,9 +15,94 @@ int main()
 {
     //Lab1_Exercise();
 
-    Lab2_Exercise();
+    //Lab2_Exercise();
+
+    Lab3_Exercise();
 
     return 0;
+}
+
+void Lab3_Exercise()
+{
+    srand(301287487); //use your student number
+    const int MAX_BALANCE = 100000;
+    const int SIZE = 20; //change this number to investigate performance
+    //Week03::Account a1(rand() % MAX_BALANCE);
+    //Week03::Account a2(rand() % MAX_BALANCE);
+    //Week03::Account a3(rand() % MAX_BALANCE);
+    //Week03::Account a4(rand() % MAX_BALANCE);
+    //a1.print_info();
+    //a2.print_info();
+    //a3.print_info();
+    //a4.print_info();
+    cout << "\nCreating the list of accounts:\n";
+    Account** accounts = Create_Accounts(SIZE, MAX_BALANCE);
+
+    //cout << "\nPrinting the list of accounts:\n";
+    //Print_Accounts(accounts, SIZE);
+
+    //cout << "\nSorting the list of accounts:\n";
+    Sort_Accounts(accounts, SIZE);
+
+    cout << "\nPrinting the list of accounts:\n";
+    Print_Accounts(accounts, SIZE);
+
+    cout << "\nDeleting the accounts:\n";
+    for (int i = 0;i < SIZE;i++)
+    {
+        delete(accounts[i]);
+    }
+}
+
+Account** Create_Accounts(int SIZE, int MAX_BALANCE)
+{
+    Account** accounts = new Account*[SIZE];
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        accounts[i] = new Account(rand() % MAX_BALANCE);
+    }
+
+    return accounts;
+}
+
+void Sort_Accounts(Account** Accounts, int size)
+{
+    // Sorting Logic (ref: https://www.geeksforgeeks.org/bubble-sort-algorithm/)
+    Timer timer = Timer();
+    bool swapped;
+    int SwapCount = 0;
+
+    timer.Start();
+
+    for (int i = 0; i < size; i++) {
+        swapped = false;
+        for (int j = 0; j < size - i - 1; j++) {
+            if (Accounts[j]->Get_Balance() > Accounts[j + 1]->Get_Balance()) {
+                swap(Accounts[j], Accounts[j + 1]);
+                swapped = true;
+                SwapCount += 1;
+            }
+        }
+
+        // If no two elements were swapped, then break
+        if (!swapped)
+            break;
+    }
+
+    auto ms = timer.Stop();
+
+    // Output messages
+    cout << "Sorting Accounts" << endl;
+    cout << "Swapped Count: " << SwapCount << " and it took: " << ms << " ms!!!!!" << endl;
+}
+
+void Print_Accounts(Account* Accounts[], int SIZE)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        Accounts[i]->Print_Info();
+    }
 }
 
 void Lab2_Exercise()
