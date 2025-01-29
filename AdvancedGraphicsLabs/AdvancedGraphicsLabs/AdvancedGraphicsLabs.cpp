@@ -1,5 +1,5 @@
 // AdvancedGraphicsLabs.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Jaydeep Modha [301287487] /// Imagine making array of this size for no reason....
 
 #include <iostream>
 #include <sstream>
@@ -26,20 +26,10 @@ void Lab3_Exercise()
 {
     srand(301287487); //use your student number
     const int MAX_BALANCE = 100000;
-    const int SIZE = 20; //change this number to investigate performance
-    //Week03::Account a1(rand() % MAX_BALANCE);
-    //Week03::Account a2(rand() % MAX_BALANCE);
-    //Week03::Account a3(rand() % MAX_BALANCE);
-    //Week03::Account a4(rand() % MAX_BALANCE);
-    //a1.print_info();
-    //a2.print_info();
-    //a3.print_info();
-    //a4.print_info();
+    const int SIZE = 300; //change this number to investigate performance
+    
     cout << "\nCreating the list of accounts:\n";
     Account** accounts = Create_Accounts(SIZE, MAX_BALANCE);
-
-    //cout << "\nPrinting the list of accounts:\n";
-    //Print_Accounts(accounts, SIZE);
 
     //cout << "\nSorting the list of accounts:\n";
     Sort_Accounts(accounts, SIZE);
@@ -78,7 +68,7 @@ void Sort_Accounts(Account** Accounts, int size)
     for (int i = 0; i < size; i++) {
         swapped = false;
         for (int j = 0; j < size - i - 1; j++) {
-            if (Accounts[j]->Get_Balance() > Accounts[j + 1]->Get_Balance()) {
+            if (Accounts[j]->Get_Balance() < Accounts[j + 1]->Get_Balance()) {
                 swap(Accounts[j], Accounts[j + 1]);
                 swapped = true;
                 SwapCount += 1;
@@ -93,8 +83,9 @@ void Sort_Accounts(Account** Accounts, int size)
     auto ms = timer.Stop();
 
     // Output messages
-    cout << "Sorting Accounts" << endl;
-    cout << "Swapped Count: " << SwapCount << " and it took: " << ms << " ms!!!!!" << endl;
+    cout << endl << "Sorting Accounts" << endl;
+    cout << "===================================" << endl;
+    cout << "Swapped Count: " << SwapCount << " and it took: " << ms << " ms!" << endl;
 }
 
 void Print_Accounts(Account* Accounts[], int SIZE)
